@@ -1,4 +1,5 @@
 import pytest
+from datetime import date, timedelta
 from src.biblioteca.servico import calcular_multa
 
 @pytest.mark.parametrize("dias_emprestimo, esperado", [
@@ -7,4 +8,6 @@ from src.biblioteca.servico import calcular_multa
     (10, 6.0),
 ])
 def test_calcula_multa_parametrizado(dias_emprestimo, esperado):
-    assert calcular_multa(dias_emprestimo) == pytest.approx(esperado)
+    data_emprestimo = date(2024, 1, 1)
+    data_devolucao = data_emprestimo + timedelta(days=dias_emprestimo)
+    assert calcular_multa(data_emprestimo, data_devolucao) == pytest.approx(esperado)
